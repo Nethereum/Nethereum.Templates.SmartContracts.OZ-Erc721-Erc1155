@@ -59,7 +59,7 @@ and you will be able to achieve something like this https://testnets.opensea.io/
 
 
 
-#Known issues on the developmetn workflow
+# Known issues on the developmetn workflow
 
 After code generation, the contract uses the keywords ```operator``` you will need to replace ```operator``` with ```@operator```, this is a known issue with Nethereum and will be fixed in the next release of code generation.
     
