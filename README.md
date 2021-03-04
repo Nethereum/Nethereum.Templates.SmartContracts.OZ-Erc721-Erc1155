@@ -14,7 +14,7 @@ Temporary instructions until this is created as a template
 # The integration example
 
 + The preset contract can be found [here](contracts/ERC721PresetMinterPauserAutoId.sol), this has been moved from the already created smart contracts by open zeppelin.
-+ Nethereum code generation fo the all the services is already in place, if you want to alter your contract, open vscode solidity to compile and auto-generate your project.
++ Nethereum code generation for all the services is already in place, if you want to alter your contract, open vscode solidity to compile and auto-generate your project.
 + Overall sample (Integration test)
 
 This is based on the original and great sample by Andrew B Coathup @abcoathup from Open Zeppelin, please refer it for extra and detailed information https://forum.openzeppelin.com/t/create-an-nft-and-deploy-to-a-public-testnet-using-truffle/2961
