@@ -32,14 +32,16 @@ namespace ERC721ContractLibrary.Testing
         public async void ShouldDeployAndMintNFTToken()
         {
 
-            var destinationAddress = "0x6C547791C3573c2093d81b919350DB1094707011";
             //Using rinkeby to demo opensea, if we dont want to use the configured client
             var web3 = _ethereumClientIntegrationFixture.GetInfuraWeb3(InfuraNetwork.Rinkeby);
             //var web3 = _ethereumClientIntegrationFixture.GetWeb3();
 
             //using https://my-json-server.typicode.com/ to host the metadata database, this creates and auto json server api based on data hosted in github
             //see https://github.com/juanfranblanco/samplenftdb/blob/main/db.json
-            var erc721PresetMinter = new ERC721PresetMinterPauserAutoIdDeployment() {BaseURI = "https://my-json-server.typicode.com/juanfranblanco/samplenftdb/tokens/", Name = "NFTArt", Symbol = "NFA"};
+            var erc721PresetMinter = new ERC721PresetMinterPauserAutoIdDeployment() {
+                BaseURI = "https://my-json-server.typicode.com/juanfranblanco/samplenftdb/tokens/", 
+                Name = "NFTArt", 
+                Symbol = "NFA"};
             
             //Deploy the erc721Minter
             var deploymentReceipt = await ERC721PresetMinterPauserAutoIdService.DeployContractAndWaitForReceiptAsync(web3, erc721PresetMinter);
