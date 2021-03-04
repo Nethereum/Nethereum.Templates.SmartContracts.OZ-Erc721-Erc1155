@@ -1,0 +1,7 @@
+{
+    "projectName": "ERC721ContractLibrary",
+    "namespace": "ERC721ContractLibrary.Contracts",
+    "lang": 0,
+    "autoCodeGen": true,
+    "projectPath": "./ERC721ContractLibrary"
+}
