@@ -1,0 +1,6 @@
+{
+  "EthereumTestSettings": {
+    "Client": "External",
+    "HttpUrl": "http://localhost:8545"
+  }
+}
