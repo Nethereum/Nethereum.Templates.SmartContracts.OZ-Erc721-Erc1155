@@ -63,7 +63,7 @@ and you will be able to achieve something like this https://testnets.opensea.io/
 
 After code generation, the contract uses the keywords ```operator``` you will need to replace ```operator``` with ```@operator```, this is a known issue with Nethereum and will be fixed in the next release of code generation.
     
-    ```csharp
+ ```csharp
        public Task<bool> IsApprovedForAllQueryAsync(string owner, string @operator, BlockParameter blockParameter = null)
         {
             var isApprovedForAllFunction = new IsApprovedForAllFunction();
@@ -72,7 +72,7 @@ After code generation, the contract uses the keywords ```operator``` you will ne
             
             return ContractHandler.QueryAsync<IsApprovedForAllFunction, bool>(isApprovedForAllFunction, blockParameter);
         }
-    ```
+ ```
     
  Function overloads are not supported after code generation, contract definitions need to be modified to have different names.
  This is an issue with SafeTransferFromFunction overload that the operation with the Data extra parameter needs to be renamed as SafeTransferFromFunctionData
