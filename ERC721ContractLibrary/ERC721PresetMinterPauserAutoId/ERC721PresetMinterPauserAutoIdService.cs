@@ -437,36 +437,36 @@ namespace ERC721ContractLibrary.Contracts.ERC721PresetMinterPauserAutoId
              return ContractHandler.SendRequestAndWaitForReceiptAsync(safeTransferFromFunction, cancellationToken);
         }
 
-        public Task<string> SafeTransferFromRequestAsync(SafeTransferFromFunctionData safeTransferFromFunction)
+        public Task<string> SafeTransferFromRequestAsync(SafeTransferFrom1Function safeTransferFrom1Function)
         {
-             return ContractHandler.SendRequestAsync(safeTransferFromFunction);
+             return ContractHandler.SendRequestAsync(safeTransferFrom1Function);
         }
 
-        public Task<TransactionReceipt> SafeTransferFromRequestAndWaitForReceiptAsync(SafeTransferFromFunctionData safeTransferFromFunction, CancellationTokenSource cancellationToken = null)
+        public Task<TransactionReceipt> SafeTransferFromRequestAndWaitForReceiptAsync(SafeTransferFrom1Function safeTransferFrom1Function, CancellationTokenSource cancellationToken = null)
         {
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(safeTransferFromFunction, cancellationToken);
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(safeTransferFrom1Function, cancellationToken);
         }
 
         public Task<string> SafeTransferFromRequestAsync(string from, string to, BigInteger tokenId, byte[] data)
         {
-            var safeTransferFromFunction = new SafeTransferFromFunctionData();
-                safeTransferFromFunction.From = from;
-                safeTransferFromFunction.To = to;
-                safeTransferFromFunction.TokenId = tokenId;
-                safeTransferFromFunction.Data = data;
+            var safeTransferFrom1Function = new SafeTransferFrom1Function();
+                safeTransferFrom1Function.From = from;
+                safeTransferFrom1Function.To = to;
+                safeTransferFrom1Function.TokenId = tokenId;
+                safeTransferFrom1Function.Data = data;
             
-             return ContractHandler.SendRequestAsync(safeTransferFromFunction);
+             return ContractHandler.SendRequestAsync(safeTransferFrom1Function);
         }
 
         public Task<TransactionReceipt> SafeTransferFromRequestAndWaitForReceiptAsync(string from, string to, BigInteger tokenId, byte[] data, CancellationTokenSource cancellationToken = null)
         {
-            var safeTransferFromFunction = new SafeTransferFromFunctionData();
-                safeTransferFromFunction.From = from;
-                safeTransferFromFunction.To = to;
-                safeTransferFromFunction.TokenId = tokenId;
-                safeTransferFromFunction.Data = data;
+            var safeTransferFrom1Function = new SafeTransferFrom1Function();
+                safeTransferFrom1Function.From = from;
+                safeTransferFrom1Function.To = to;
+                safeTransferFrom1Function.TokenId = tokenId;
+                safeTransferFrom1Function.Data = data;
             
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(safeTransferFromFunction, cancellationToken);
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(safeTransferFrom1Function, cancellationToken);
         }
 
         public Task<string> SetApprovalForAllRequestAsync(SetApprovalForAllFunction setApprovalForAllFunction)
