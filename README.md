@@ -1,6 +1,8 @@
 # ERC721ContractLibrary.Template
 Template to get started creating ERC721 NFTs using OpenZeppelin
 
+For more information on ERC721 check the spec https://eips.ethereum.org/EIPS/eip-721
+
 This template provides an example of creating an NFT using the preset ERC721 smart contract provided by OpenZeppelin "ERC721PresetMinterPauserAutoId", an ERC721 standard with minting, pausing and auto id (evertime you mint an nft the id automatically created sequentially).
 
 It also provides a development environment to work with OpenZeppelin smart contracts and Nethereum.
