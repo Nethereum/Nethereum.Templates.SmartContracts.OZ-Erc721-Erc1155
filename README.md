@@ -88,5 +88,7 @@ Temporary instructions until this is created as a full template
             };
             Process.Start(ps);
 ```
+Metadata example: https://bafkreia62g7siwpqowu26t2dmyy575e4hwmoaxsdaadb4fnlb2mmkuvy7y.ipfs.dweb.link/
+
 ![image](https://user-images.githubusercontent.com/562371/156877329-9f799c56-a4e4-4314-9169-489370c73e73.png)
 
