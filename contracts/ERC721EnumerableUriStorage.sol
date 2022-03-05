@@ -39,8 +39,6 @@ contract ERC721EnumerableUriStorage is
 
     Counters.Counter private _tokenIdTracker;
 
-    string private _baseTokenURI;
-
     /**
      * @dev Grants `DEFAULT_ADMIN_ROLE`, `MINTER_ROLE` and `PAUSER_ROLE` to the
      * account that deploys the contract.
@@ -50,13 +48,10 @@ contract ERC721EnumerableUriStorage is
      */
     constructor(
         string memory name,
-        string memory symbol,
-        string memory baseTokenURI 
+        string memory symbol
     ) ERC721(name, symbol) {
-        _baseTokenURI = baseTokenURI;
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
         _setupRole(MINTER_ROLE, _msgSender());
-        //mint(_msgSender(),firstTokenURI);
     }
 
     /**

@@ -1,5 +1,6 @@
 {
     "telemetry.enableCrashReporter": false,
-
-
+    
+    "solidity.remappingsWindows": ["@openzeppelin/contracts/=H:\\JuanFran\\Documents\\Source\\Repos\\Nethereum.ERC721.Template\\node_modules\\@openzeppelin\\contracts"],
+    "solidity.remappings": ["@openzeppelin/contracts/=H:\\JuanFran\\Documents\\Source\\Repos\\Nethereum.ERC721.Template\\node_modules\\@openzeppelin\\contract"]
 }
