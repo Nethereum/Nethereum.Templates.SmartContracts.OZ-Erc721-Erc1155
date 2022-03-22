@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using Nethereum.Signer;
 using Nethereum.Util;
 using Nethereum.Web3.Accounts;
@@ -43,6 +44,7 @@ namespace ERC721ContractLibrary.Testing
             web3.Eth.TransactionManager.UseLegacyAsDefault = true;
 
             //creating our deployment information (this includes the bytecode already)
+            //This example creates an NFT Property (Real state) registry
             var erc721Deployment = new ERC721EnumerableUriStorageDeployment() { Name = "Property Registry", Symbol = "PR" };
 
             //Deploy the erc721Minter
@@ -99,6 +101,18 @@ namespace ERC721ContractLibrary.Testing
                 Verb = "open"
             };
             Process.Start(ps);
+
+            var transfer = await erc721Service.TransferFromRequestAndWaitForReceiptAsync(ownerOfToken, ownerOfToken, 0);
+            try
+            {
+                var transfer2 = await erc721Service.TransferFromRequestAndWaitForReceiptAsync(ownerOfToken,
+                    "0x12890d2cce102216644c59daE5baed380d84830c", 0);
+            }
+            catch(Exception ex)
+            {
+                //The example creates a non transferable token.
+                Assert.NotNull(ex);
+            }
 
         }
 

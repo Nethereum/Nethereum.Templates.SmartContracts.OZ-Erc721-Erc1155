@@ -64,6 +64,17 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
             return ContractHandler.QueryAsync<MINTER_ROLEFunction, byte[]>(null, blockParameter);
         }
 
+        public Task<byte[]> PAUSER_ROLEQueryAsync(PAUSER_ROLEFunction pAUSER_ROLEFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<PAUSER_ROLEFunction, byte[]>(pAUSER_ROLEFunction, blockParameter);
+        }
+
+        
+        public Task<byte[]> PAUSER_ROLEQueryAsync(BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<PAUSER_ROLEFunction, byte[]>(null, blockParameter);
+        }
+
         public Task<string> ApproveRequestAsync(ApproveFunction approveFunction)
         {
              return ContractHandler.SendRequestAsync(approveFunction);
@@ -272,6 +283,37 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
                 ownerOfFunction.TokenId = tokenId;
             
             return ContractHandler.QueryAsync<OwnerOfFunction, string>(ownerOfFunction, blockParameter);
+        }
+
+        public Task<string> PauseRequestAsync(PauseFunction pauseFunction)
+        {
+             return ContractHandler.SendRequestAsync(pauseFunction);
+        }
+
+        public Task<string> PauseRequestAsync()
+        {
+             return ContractHandler.SendRequestAsync<PauseFunction>();
+        }
+
+        public Task<TransactionReceipt> PauseRequestAndWaitForReceiptAsync(PauseFunction pauseFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(pauseFunction, cancellationToken);
+        }
+
+        public Task<TransactionReceipt> PauseRequestAndWaitForReceiptAsync(CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync<PauseFunction>(null, cancellationToken);
+        }
+
+        public Task<bool> PausedQueryAsync(PausedFunction pausedFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<PausedFunction, bool>(pausedFunction, blockParameter);
+        }
+
+        
+        public Task<bool> PausedQueryAsync(BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<PausedFunction, bool>(null, blockParameter);
         }
 
         public Task<string> RenounceRoleRequestAsync(RenounceRoleFunction renounceRoleFunction)
@@ -527,6 +569,26 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
                 transferFromFunction.TokenId = tokenId;
             
              return ContractHandler.SendRequestAndWaitForReceiptAsync(transferFromFunction, cancellationToken);
+        }
+
+        public Task<string> UnpauseRequestAsync(UnpauseFunction unpauseFunction)
+        {
+             return ContractHandler.SendRequestAsync(unpauseFunction);
+        }
+
+        public Task<string> UnpauseRequestAsync()
+        {
+             return ContractHandler.SendRequestAsync<UnpauseFunction>();
+        }
+
+        public Task<TransactionReceipt> UnpauseRequestAndWaitForReceiptAsync(UnpauseFunction unpauseFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(unpauseFunction, cancellationToken);
+        }
+
+        public Task<TransactionReceipt> UnpauseRequestAndWaitForReceiptAsync(CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync<UnpauseFunction>(null, cancellationToken);
         }
     }
 }
