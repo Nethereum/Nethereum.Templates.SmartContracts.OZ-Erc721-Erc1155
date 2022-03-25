@@ -21,6 +21,14 @@ namespace ERC721ContractLibrary.Testing
         public string Image { get; set; }
     }
 
+    public class Nft1155Metadata:NftMetadata
+    {
+        
+        [JsonProperty("decimals")]
+        public int Decimals { get; set; }
+        
+    }
+
     public class NFTIpfsService
     {
         private readonly string _userName;

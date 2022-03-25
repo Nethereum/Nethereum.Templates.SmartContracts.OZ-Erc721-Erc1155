@@ -31,6 +31,9 @@
     <None Update="Documents\TitlePlanImage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="ShopImages\hard-drive-by-vincent-botta-from-unsplash.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

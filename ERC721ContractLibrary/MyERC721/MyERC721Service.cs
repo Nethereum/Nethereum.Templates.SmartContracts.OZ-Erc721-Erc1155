@@ -10,69 +10,47 @@ using Nethereum.Contracts.CQS;
 using Nethereum.Contracts.ContractHandlers;
 using Nethereum.Contracts;
 using System.Threading;
-using ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage.ContractDefinition;
+using ERC721ContractLibrary.Contracts.MyERC721.ContractDefinition;
 
-namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
+namespace ERC721ContractLibrary.Contracts.MyERC721
 {
-    public partial class ERC721EnumerableUriStorageService
+    public partial class MyERC721Service
     {
-        public static Task<TransactionReceipt> DeployContractAndWaitForReceiptAsync(Nethereum.Web3.Web3 web3, ERC721EnumerableUriStorageDeployment eRC721EnumerableUriStorageDeployment, CancellationTokenSource cancellationTokenSource = null)
+        public static Task<TransactionReceipt> DeployContractAndWaitForReceiptAsync(Nethereum.Web3.Web3 web3, MyERC721Deployment myERC721Deployment, CancellationTokenSource cancellationTokenSource = null)
         {
-            return web3.Eth.GetContractDeploymentHandler<ERC721EnumerableUriStorageDeployment>().SendRequestAndWaitForReceiptAsync(eRC721EnumerableUriStorageDeployment, cancellationTokenSource);
+            return web3.Eth.GetContractDeploymentHandler<MyERC721Deployment>().SendRequestAndWaitForReceiptAsync(myERC721Deployment, cancellationTokenSource);
         }
 
-        public static Task<string> DeployContractAsync(Nethereum.Web3.Web3 web3, ERC721EnumerableUriStorageDeployment eRC721EnumerableUriStorageDeployment)
+        public static Task<string> DeployContractAsync(Nethereum.Web3.Web3 web3, MyERC721Deployment myERC721Deployment)
         {
-            return web3.Eth.GetContractDeploymentHandler<ERC721EnumerableUriStorageDeployment>().SendRequestAsync(eRC721EnumerableUriStorageDeployment);
+            return web3.Eth.GetContractDeploymentHandler<MyERC721Deployment>().SendRequestAsync(myERC721Deployment);
         }
 
-        public static async Task<ERC721EnumerableUriStorageService> DeployContractAndGetServiceAsync(Nethereum.Web3.Web3 web3, ERC721EnumerableUriStorageDeployment eRC721EnumerableUriStorageDeployment, CancellationTokenSource cancellationTokenSource = null)
+        public static async Task<MyERC721Service> DeployContractAndGetServiceAsync(Nethereum.Web3.Web3 web3, MyERC721Deployment myERC721Deployment, CancellationTokenSource cancellationTokenSource = null)
         {
-            var receipt = await DeployContractAndWaitForReceiptAsync(web3, eRC721EnumerableUriStorageDeployment, cancellationTokenSource);
-            return new ERC721EnumerableUriStorageService(web3, receipt.ContractAddress);
+            var receipt = await DeployContractAndWaitForReceiptAsync(web3, myERC721Deployment, cancellationTokenSource);
+            return new MyERC721Service(web3, receipt.ContractAddress);
         }
 
         protected Nethereum.Web3.Web3 Web3{ get; }
 
         public ContractHandler ContractHandler { get; }
 
-        public ERC721EnumerableUriStorageService(Nethereum.Web3.Web3 web3, string contractAddress)
+        public MyERC721Service(Nethereum.Web3.Web3 web3, string contractAddress)
         {
             Web3 = web3;
             ContractHandler = web3.Eth.GetContractHandler(contractAddress);
         }
 
-        public Task<byte[]> DEFAULT_ADMIN_ROLEQueryAsync(DEFAULT_ADMIN_ROLEFunction dEFAULT_ADMIN_ROLEFunction, BlockParameter blockParameter = null)
+        public Task<byte[]> DOMAIN_SEPARATORQueryAsync(DOMAIN_SEPARATORFunction dOMAIN_SEPARATORFunction, BlockParameter blockParameter = null)
         {
-            return ContractHandler.QueryAsync<DEFAULT_ADMIN_ROLEFunction, byte[]>(dEFAULT_ADMIN_ROLEFunction, blockParameter);
+            return ContractHandler.QueryAsync<DOMAIN_SEPARATORFunction, byte[]>(dOMAIN_SEPARATORFunction, blockParameter);
         }
 
         
-        public Task<byte[]> DEFAULT_ADMIN_ROLEQueryAsync(BlockParameter blockParameter = null)
+        public Task<byte[]> DOMAIN_SEPARATORQueryAsync(BlockParameter blockParameter = null)
         {
-            return ContractHandler.QueryAsync<DEFAULT_ADMIN_ROLEFunction, byte[]>(null, blockParameter);
-        }
-
-        public Task<byte[]> MINTER_ROLEQueryAsync(MINTER_ROLEFunction mINTER_ROLEFunction, BlockParameter blockParameter = null)
-        {
-            return ContractHandler.QueryAsync<MINTER_ROLEFunction, byte[]>(mINTER_ROLEFunction, blockParameter);
-        }
-
-        
-        public Task<byte[]> MINTER_ROLEQueryAsync(BlockParameter blockParameter = null)
-        {
-            return ContractHandler.QueryAsync<MINTER_ROLEFunction, byte[]>(null, blockParameter);
-        }
-
-        public Task<byte[]> PAUSER_ROLEQueryAsync(PAUSER_ROLEFunction pAUSER_ROLEFunction, BlockParameter blockParameter = null)
-        {
-            return ContractHandler.QueryAsync<PAUSER_ROLEFunction, byte[]>(pAUSER_ROLEFunction, blockParameter);
-        }
-
-        
-        public Task<byte[]> PAUSER_ROLEQueryAsync(BlockParameter blockParameter = null)
-        {
-            return ContractHandler.QueryAsync<PAUSER_ROLEFunction, byte[]>(null, blockParameter);
+            return ContractHandler.QueryAsync<DOMAIN_SEPARATORFunction, byte[]>(null, blockParameter);
         }
 
         public Task<string> ApproveRequestAsync(ApproveFunction approveFunction)
@@ -117,6 +95,108 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
             return ContractHandler.QueryAsync<BalanceOfFunction, BigInteger>(balanceOfFunction, blockParameter);
         }
 
+        public Task<string> BurnRequestAsync(BurnFunction burnFunction)
+        {
+             return ContractHandler.SendRequestAsync(burnFunction);
+        }
+
+        public Task<TransactionReceipt> BurnRequestAndWaitForReceiptAsync(BurnFunction burnFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(burnFunction, cancellationToken);
+        }
+
+        public Task<string> BurnRequestAsync(BigInteger tokenId)
+        {
+            var burnFunction = new BurnFunction();
+                burnFunction.TokenId = tokenId;
+            
+             return ContractHandler.SendRequestAsync(burnFunction);
+        }
+
+        public Task<TransactionReceipt> BurnRequestAndWaitForReceiptAsync(BigInteger tokenId, CancellationTokenSource cancellationToken = null)
+        {
+            var burnFunction = new BurnFunction();
+                burnFunction.TokenId = tokenId;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(burnFunction, cancellationToken);
+        }
+
+        public Task<string> DelegateRequestAsync(DelegateFunction @delegateFunction)
+        {
+             return ContractHandler.SendRequestAsync(@delegateFunction);
+        }
+
+        public Task<TransactionReceipt> DelegateRequestAndWaitForReceiptAsync(DelegateFunction @delegateFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(@delegateFunction, cancellationToken);
+        }
+
+        public Task<string> DelegateRequestAsync(string delegatee)
+        {
+            var @delegateFunction = new DelegateFunction();
+                @delegateFunction.Delegatee = delegatee;
+            
+             return ContractHandler.SendRequestAsync(@delegateFunction);
+        }
+
+        public Task<TransactionReceipt> DelegateRequestAndWaitForReceiptAsync(string delegatee, CancellationTokenSource cancellationToken = null)
+        {
+            var @delegateFunction = new DelegateFunction();
+                @delegateFunction.Delegatee = delegatee;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(@delegateFunction, cancellationToken);
+        }
+
+        public Task<string> DelegateBySigRequestAsync(DelegateBySigFunction delegateBySigFunction)
+        {
+             return ContractHandler.SendRequestAsync(delegateBySigFunction);
+        }
+
+        public Task<TransactionReceipt> DelegateBySigRequestAndWaitForReceiptAsync(DelegateBySigFunction delegateBySigFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(delegateBySigFunction, cancellationToken);
+        }
+
+        public Task<string> DelegateBySigRequestAsync(string delegatee, BigInteger nonce, BigInteger expiry, byte v, byte[] r, byte[] s)
+        {
+            var delegateBySigFunction = new DelegateBySigFunction();
+                delegateBySigFunction.Delegatee = delegatee;
+                delegateBySigFunction.Nonce = nonce;
+                delegateBySigFunction.Expiry = expiry;
+                delegateBySigFunction.V = v;
+                delegateBySigFunction.R = r;
+                delegateBySigFunction.S = s;
+            
+             return ContractHandler.SendRequestAsync(delegateBySigFunction);
+        }
+
+        public Task<TransactionReceipt> DelegateBySigRequestAndWaitForReceiptAsync(string delegatee, BigInteger nonce, BigInteger expiry, byte v, byte[] r, byte[] s, CancellationTokenSource cancellationToken = null)
+        {
+            var delegateBySigFunction = new DelegateBySigFunction();
+                delegateBySigFunction.Delegatee = delegatee;
+                delegateBySigFunction.Nonce = nonce;
+                delegateBySigFunction.Expiry = expiry;
+                delegateBySigFunction.V = v;
+                delegateBySigFunction.R = r;
+                delegateBySigFunction.S = s;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(delegateBySigFunction, cancellationToken);
+        }
+
+        public Task<string> DelegatesQueryAsync(DelegatesFunction delegatesFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<DelegatesFunction, string>(delegatesFunction, blockParameter);
+        }
+
+        
+        public Task<string> DelegatesQueryAsync(string account, BlockParameter blockParameter = null)
+        {
+            var delegatesFunction = new DelegatesFunction();
+                delegatesFunction.Account = account;
+            
+            return ContractHandler.QueryAsync<DelegatesFunction, string>(delegatesFunction, blockParameter);
+        }
+
         public Task<string> GetApprovedQueryAsync(GetApprovedFunction getApprovedFunction, BlockParameter blockParameter = null)
         {
             return ContractHandler.QueryAsync<GetApprovedFunction, string>(getApprovedFunction, blockParameter);
@@ -131,90 +211,47 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
             return ContractHandler.QueryAsync<GetApprovedFunction, string>(getApprovedFunction, blockParameter);
         }
 
-        public Task<byte[]> GetRoleAdminQueryAsync(GetRoleAdminFunction getRoleAdminFunction, BlockParameter blockParameter = null)
+        public Task<BigInteger> GetPastTotalSupplyQueryAsync(GetPastTotalSupplyFunction getPastTotalSupplyFunction, BlockParameter blockParameter = null)
         {
-            return ContractHandler.QueryAsync<GetRoleAdminFunction, byte[]>(getRoleAdminFunction, blockParameter);
+            return ContractHandler.QueryAsync<GetPastTotalSupplyFunction, BigInteger>(getPastTotalSupplyFunction, blockParameter);
         }
 
         
-        public Task<byte[]> GetRoleAdminQueryAsync(byte[] role, BlockParameter blockParameter = null)
+        public Task<BigInteger> GetPastTotalSupplyQueryAsync(BigInteger blockNumber, BlockParameter blockParameter = null)
         {
-            var getRoleAdminFunction = new GetRoleAdminFunction();
-                getRoleAdminFunction.Role = role;
+            var getPastTotalSupplyFunction = new GetPastTotalSupplyFunction();
+                getPastTotalSupplyFunction.BlockNumber = blockNumber;
             
-            return ContractHandler.QueryAsync<GetRoleAdminFunction, byte[]>(getRoleAdminFunction, blockParameter);
+            return ContractHandler.QueryAsync<GetPastTotalSupplyFunction, BigInteger>(getPastTotalSupplyFunction, blockParameter);
         }
 
-        public Task<string> GetRoleMemberQueryAsync(GetRoleMemberFunction getRoleMemberFunction, BlockParameter blockParameter = null)
+        public Task<BigInteger> GetPastVotesQueryAsync(GetPastVotesFunction getPastVotesFunction, BlockParameter blockParameter = null)
         {
-            return ContractHandler.QueryAsync<GetRoleMemberFunction, string>(getRoleMemberFunction, blockParameter);
+            return ContractHandler.QueryAsync<GetPastVotesFunction, BigInteger>(getPastVotesFunction, blockParameter);
         }
 
         
-        public Task<string> GetRoleMemberQueryAsync(byte[] role, BigInteger index, BlockParameter blockParameter = null)
+        public Task<BigInteger> GetPastVotesQueryAsync(string account, BigInteger blockNumber, BlockParameter blockParameter = null)
         {
-            var getRoleMemberFunction = new GetRoleMemberFunction();
-                getRoleMemberFunction.Role = role;
-                getRoleMemberFunction.Index = index;
+            var getPastVotesFunction = new GetPastVotesFunction();
+                getPastVotesFunction.Account = account;
+                getPastVotesFunction.BlockNumber = blockNumber;
             
-            return ContractHandler.QueryAsync<GetRoleMemberFunction, string>(getRoleMemberFunction, blockParameter);
+            return ContractHandler.QueryAsync<GetPastVotesFunction, BigInteger>(getPastVotesFunction, blockParameter);
         }
 
-        public Task<BigInteger> GetRoleMemberCountQueryAsync(GetRoleMemberCountFunction getRoleMemberCountFunction, BlockParameter blockParameter = null)
+        public Task<BigInteger> GetVotesQueryAsync(GetVotesFunction getVotesFunction, BlockParameter blockParameter = null)
         {
-            return ContractHandler.QueryAsync<GetRoleMemberCountFunction, BigInteger>(getRoleMemberCountFunction, blockParameter);
+            return ContractHandler.QueryAsync<GetVotesFunction, BigInteger>(getVotesFunction, blockParameter);
         }
 
         
-        public Task<BigInteger> GetRoleMemberCountQueryAsync(byte[] role, BlockParameter blockParameter = null)
+        public Task<BigInteger> GetVotesQueryAsync(string account, BlockParameter blockParameter = null)
         {
-            var getRoleMemberCountFunction = new GetRoleMemberCountFunction();
-                getRoleMemberCountFunction.Role = role;
+            var getVotesFunction = new GetVotesFunction();
+                getVotesFunction.Account = account;
             
-            return ContractHandler.QueryAsync<GetRoleMemberCountFunction, BigInteger>(getRoleMemberCountFunction, blockParameter);
-        }
-
-        public Task<string> GrantRoleRequestAsync(GrantRoleFunction grantRoleFunction)
-        {
-             return ContractHandler.SendRequestAsync(grantRoleFunction);
-        }
-
-        public Task<TransactionReceipt> GrantRoleRequestAndWaitForReceiptAsync(GrantRoleFunction grantRoleFunction, CancellationTokenSource cancellationToken = null)
-        {
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(grantRoleFunction, cancellationToken);
-        }
-
-        public Task<string> GrantRoleRequestAsync(byte[] role, string account)
-        {
-            var grantRoleFunction = new GrantRoleFunction();
-                grantRoleFunction.Role = role;
-                grantRoleFunction.Account = account;
-            
-             return ContractHandler.SendRequestAsync(grantRoleFunction);
-        }
-
-        public Task<TransactionReceipt> GrantRoleRequestAndWaitForReceiptAsync(byte[] role, string account, CancellationTokenSource cancellationToken = null)
-        {
-            var grantRoleFunction = new GrantRoleFunction();
-                grantRoleFunction.Role = role;
-                grantRoleFunction.Account = account;
-            
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(grantRoleFunction, cancellationToken);
-        }
-
-        public Task<bool> HasRoleQueryAsync(HasRoleFunction hasRoleFunction, BlockParameter blockParameter = null)
-        {
-            return ContractHandler.QueryAsync<HasRoleFunction, bool>(hasRoleFunction, blockParameter);
-        }
-
-        
-        public Task<bool> HasRoleQueryAsync(byte[] role, string account, BlockParameter blockParameter = null)
-        {
-            var hasRoleFunction = new HasRoleFunction();
-                hasRoleFunction.Role = role;
-                hasRoleFunction.Account = account;
-            
-            return ContractHandler.QueryAsync<HasRoleFunction, bool>(hasRoleFunction, blockParameter);
+            return ContractHandler.QueryAsync<GetVotesFunction, BigInteger>(getVotesFunction, blockParameter);
         }
 
         public Task<bool> IsApprovedForAllQueryAsync(IsApprovedForAllFunction isApprovedForAllFunction, BlockParameter blockParameter = null)
@@ -232,34 +269,6 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
             return ContractHandler.QueryAsync<IsApprovedForAllFunction, bool>(isApprovedForAllFunction, blockParameter);
         }
 
-        public Task<string> MintRequestAsync(MintFunction mintFunction)
-        {
-             return ContractHandler.SendRequestAsync(mintFunction);
-        }
-
-        public Task<TransactionReceipt> MintRequestAndWaitForReceiptAsync(MintFunction mintFunction, CancellationTokenSource cancellationToken = null)
-        {
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(mintFunction, cancellationToken);
-        }
-
-        public Task<string> MintRequestAsync(string to, string newTokenURI)
-        {
-            var mintFunction = new MintFunction();
-                mintFunction.To = to;
-                mintFunction.NewTokenURI = newTokenURI;
-            
-             return ContractHandler.SendRequestAsync(mintFunction);
-        }
-
-        public Task<TransactionReceipt> MintRequestAndWaitForReceiptAsync(string to, string newTokenURI, CancellationTokenSource cancellationToken = null)
-        {
-            var mintFunction = new MintFunction();
-                mintFunction.To = to;
-                mintFunction.NewTokenURI = newTokenURI;
-            
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(mintFunction, cancellationToken);
-        }
-
         public Task<string> NameQueryAsync(NameFunction nameFunction, BlockParameter blockParameter = null)
         {
             return ContractHandler.QueryAsync<NameFunction, string>(nameFunction, blockParameter);
@@ -269,6 +278,31 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
         public Task<string> NameQueryAsync(BlockParameter blockParameter = null)
         {
             return ContractHandler.QueryAsync<NameFunction, string>(null, blockParameter);
+        }
+
+        public Task<BigInteger> NoncesQueryAsync(NoncesFunction noncesFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<NoncesFunction, BigInteger>(noncesFunction, blockParameter);
+        }
+
+        
+        public Task<BigInteger> NoncesQueryAsync(string owner, BlockParameter blockParameter = null)
+        {
+            var noncesFunction = new NoncesFunction();
+                noncesFunction.Owner = owner;
+            
+            return ContractHandler.QueryAsync<NoncesFunction, BigInteger>(noncesFunction, blockParameter);
+        }
+
+        public Task<string> OwnerQueryAsync(OwnerFunction ownerFunction, BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<OwnerFunction, string>(ownerFunction, blockParameter);
+        }
+
+        
+        public Task<string> OwnerQueryAsync(BlockParameter blockParameter = null)
+        {
+            return ContractHandler.QueryAsync<OwnerFunction, string>(null, blockParameter);
         }
 
         public Task<string> OwnerOfQueryAsync(OwnerOfFunction ownerOfFunction, BlockParameter blockParameter = null)
@@ -316,60 +350,52 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
             return ContractHandler.QueryAsync<PausedFunction, bool>(null, blockParameter);
         }
 
-        public Task<string> RenounceRoleRequestAsync(RenounceRoleFunction renounceRoleFunction)
+        public Task<string> RenounceOwnershipRequestAsync(RenounceOwnershipFunction renounceOwnershipFunction)
         {
-             return ContractHandler.SendRequestAsync(renounceRoleFunction);
+             return ContractHandler.SendRequestAsync(renounceOwnershipFunction);
         }
 
-        public Task<TransactionReceipt> RenounceRoleRequestAndWaitForReceiptAsync(RenounceRoleFunction renounceRoleFunction, CancellationTokenSource cancellationToken = null)
+        public Task<string> RenounceOwnershipRequestAsync()
         {
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(renounceRoleFunction, cancellationToken);
+             return ContractHandler.SendRequestAsync<RenounceOwnershipFunction>();
         }
 
-        public Task<string> RenounceRoleRequestAsync(byte[] role, string account)
+        public Task<TransactionReceipt> RenounceOwnershipRequestAndWaitForReceiptAsync(RenounceOwnershipFunction renounceOwnershipFunction, CancellationTokenSource cancellationToken = null)
         {
-            var renounceRoleFunction = new RenounceRoleFunction();
-                renounceRoleFunction.Role = role;
-                renounceRoleFunction.Account = account;
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(renounceOwnershipFunction, cancellationToken);
+        }
+
+        public Task<TransactionReceipt> RenounceOwnershipRequestAndWaitForReceiptAsync(CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync<RenounceOwnershipFunction>(null, cancellationToken);
+        }
+
+        public Task<string> SafeMintRequestAsync(SafeMintFunction safeMintFunction)
+        {
+             return ContractHandler.SendRequestAsync(safeMintFunction);
+        }
+
+        public Task<TransactionReceipt> SafeMintRequestAndWaitForReceiptAsync(SafeMintFunction safeMintFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction, cancellationToken);
+        }
+
+        public Task<string> SafeMintRequestAsync(string to, string uri)
+        {
+            var safeMintFunction = new SafeMintFunction();
+                safeMintFunction.To = to;
+                safeMintFunction.Uri = uri;
             
-             return ContractHandler.SendRequestAsync(renounceRoleFunction);
+             return ContractHandler.SendRequestAsync(safeMintFunction);
         }
 
-        public Task<TransactionReceipt> RenounceRoleRequestAndWaitForReceiptAsync(byte[] role, string account, CancellationTokenSource cancellationToken = null)
+        public Task<TransactionReceipt> SafeMintRequestAndWaitForReceiptAsync(string to, string uri, CancellationTokenSource cancellationToken = null)
         {
-            var renounceRoleFunction = new RenounceRoleFunction();
-                renounceRoleFunction.Role = role;
-                renounceRoleFunction.Account = account;
+            var safeMintFunction = new SafeMintFunction();
+                safeMintFunction.To = to;
+                safeMintFunction.Uri = uri;
             
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(renounceRoleFunction, cancellationToken);
-        }
-
-        public Task<string> RevokeRoleRequestAsync(RevokeRoleFunction revokeRoleFunction)
-        {
-             return ContractHandler.SendRequestAsync(revokeRoleFunction);
-        }
-
-        public Task<TransactionReceipt> RevokeRoleRequestAndWaitForReceiptAsync(RevokeRoleFunction revokeRoleFunction, CancellationTokenSource cancellationToken = null)
-        {
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(revokeRoleFunction, cancellationToken);
-        }
-
-        public Task<string> RevokeRoleRequestAsync(byte[] role, string account)
-        {
-            var revokeRoleFunction = new RevokeRoleFunction();
-                revokeRoleFunction.Role = role;
-                revokeRoleFunction.Account = account;
-            
-             return ContractHandler.SendRequestAsync(revokeRoleFunction);
-        }
-
-        public Task<TransactionReceipt> RevokeRoleRequestAndWaitForReceiptAsync(byte[] role, string account, CancellationTokenSource cancellationToken = null)
-        {
-            var revokeRoleFunction = new RevokeRoleFunction();
-                revokeRoleFunction.Role = role;
-                revokeRoleFunction.Account = account;
-            
-             return ContractHandler.SendRequestAndWaitForReceiptAsync(revokeRoleFunction, cancellationToken);
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(safeMintFunction, cancellationToken);
         }
 
         public Task<string> SafeTransferFromRequestAsync(SafeTransferFromFunction safeTransferFromFunction)
@@ -569,6 +595,32 @@ namespace ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage
                 transferFromFunction.TokenId = tokenId;
             
              return ContractHandler.SendRequestAndWaitForReceiptAsync(transferFromFunction, cancellationToken);
+        }
+
+        public Task<string> TransferOwnershipRequestAsync(TransferOwnershipFunction transferOwnershipFunction)
+        {
+             return ContractHandler.SendRequestAsync(transferOwnershipFunction);
+        }
+
+        public Task<TransactionReceipt> TransferOwnershipRequestAndWaitForReceiptAsync(TransferOwnershipFunction transferOwnershipFunction, CancellationTokenSource cancellationToken = null)
+        {
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(transferOwnershipFunction, cancellationToken);
+        }
+
+        public Task<string> TransferOwnershipRequestAsync(string newOwner)
+        {
+            var transferOwnershipFunction = new TransferOwnershipFunction();
+                transferOwnershipFunction.NewOwner = newOwner;
+            
+             return ContractHandler.SendRequestAsync(transferOwnershipFunction);
+        }
+
+        public Task<TransactionReceipt> TransferOwnershipRequestAndWaitForReceiptAsync(string newOwner, CancellationTokenSource cancellationToken = null)
+        {
+            var transferOwnershipFunction = new TransferOwnershipFunction();
+                transferOwnershipFunction.NewOwner = newOwner;
+            
+             return ContractHandler.SendRequestAndWaitForReceiptAsync(transferOwnershipFunction, cancellationToken);
         }
 
         public Task<string> UnpauseRequestAsync(UnpauseFunction unpauseFunction)

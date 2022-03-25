@@ -14,8 +14,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
-using ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage;
-using ERC721ContractLibrary.Contracts.ERC721EnumerableUriStorage.ContractDefinition;
+using ERC721ContractLibrary.Contracts.MyERC721;
+using ERC721ContractLibrary.Contracts.MyERC721.ContractDefinition;
 using Nethereum.BlockchainProcessing.ProgressRepositories;
 using Newtonsoft.Json;
 
@@ -23,11 +23,11 @@ using Newtonsoft.Json;
 namespace ERC721ContractLibrary.Testing
 {
     [Collection(EthereumClientIntegrationFixture.ETHEREUM_CLIENT_COLLECTION_DEFAULT)]
-    public class ERC721EnumerableUriStorageServiceTest
+    public class MyErc721Test
     {
         private readonly EthereumClientIntegrationFixture _ethereumClientIntegrationFixture;
 
-        public ERC721EnumerableUriStorageServiceTest(EthereumClientIntegrationFixture ethereumClientIntegrationFixture)
+        public MyErc721Test(EthereumClientIntegrationFixture ethereumClientIntegrationFixture)
         {
             _ethereumClientIntegrationFixture = ethereumClientIntegrationFixture;
         }
@@ -45,13 +45,13 @@ namespace ERC721ContractLibrary.Testing
 
             //creating our deployment information (this includes the bytecode already)
             //This example creates an NFT Property (Real state) registry
-            var erc721Deployment = new ERC721EnumerableUriStorageDeployment() { Name = "Property Registry", Symbol = "PR" };
+            var erc721Deployment = new MyERC721Deployment() { Name = "Property Registry", Symbol = "PR" };
 
             //Deploy the erc721Minter
-            var deploymentReceipt = await ERC721EnumerableUriStorageService.DeployContractAndWaitForReceiptAsync(web3, erc721Deployment);
+            var deploymentReceipt = await MyERC721Service.DeployContractAndWaitForReceiptAsync(web3, erc721Deployment);
 
             //creating a new service with the new contract address
-            var erc721Service = new ERC721EnumerableUriStorageService(web3, deploymentReceipt.ContractAddress);
+            var erc721Service = new MyERC721Service(web3, deploymentReceipt.ContractAddress);
 
             //uploading to ipfs our documents
             var nftIpfsService = new NFTIpfsService("https://ipfs.infura.io:5001");
@@ -81,7 +81,7 @@ namespace ERC721ContractLibrary.Testing
             var addressToRegisterOwnership = "0xe612205919814b1995D861Bdf6C2fE2f20cDBd68";
 
             //Minting the nft with the url to the ipfs metadata
-            var mintReceipt = await erc721Service.MintRequestAndWaitForReceiptAsync(
+            var mintReceipt = await erc721Service.SafeMintRequestAndWaitForReceiptAsync(
                 addressToRegisterOwnership, "ipfs://" + metadataIpfs.Hash);
 
             //we have just minted our first nft so the nft will have the id of 0. 
@@ -103,16 +103,7 @@ namespace ERC721ContractLibrary.Testing
             Process.Start(ps);
 
             var transfer = await erc721Service.TransferFromRequestAndWaitForReceiptAsync(ownerOfToken, ownerOfToken, 0);
-            try
-            {
-                var transfer2 = await erc721Service.TransferFromRequestAndWaitForReceiptAsync(ownerOfToken,
-                    "0x12890d2cce102216644c59daE5baed380d84830c", 0);
-            }
-            catch(Exception ex)
-            {
-                //The example creates a non transferable token.
-                Assert.NotNull(ex);
-            }
+           Assert.False(transfer.HasErrors());
 
         }
 
