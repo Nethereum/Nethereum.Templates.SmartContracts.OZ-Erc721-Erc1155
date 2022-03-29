@@ -1,5 +1,5 @@
 # ERC721 - ERC1155 - Governor ContractLibrary Template
-Template to get started creating ERC721 - ERC1155 NFTs and DAO Governor using OpenZeppelin
+Template to get started creating ERC721 NFTs - ERC1155  and DAO Governor using OpenZeppelin
 
 For more information:
 
