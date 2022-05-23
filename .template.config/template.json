@@ -1,0 +1,38 @@
+{
+    "author": "Juan Blanco",
+    "classifications": ["Nethereum", "Smart contracts", "OpenZeppelin", "ERC721", "ERC1155"],
+    "name": "Nethereum contract library using Open Zeppelin smart contracts ERC721, ERC1155 and  XUnit samples",
+    "tags": {
+        "language": "C#"
+    },
+    "symbols": {
+        "ContractLibrary": {
+            "type": "parameter",
+            "datatype": "text",
+            "description": "Renames files containing 'ERC721ContractLibrary'",
+            "fileRename": "ERC721ContractLibrary",
+            "replaces": "ERC721ContractLibrary",
+            "isRequired": true,
+            "defaultValue": "MyContractLibrary"
+        }
+    },
+    "identity": "nethererum.erc721xunit",
+    "shortName": "nethereum.oz",
+    "sourceName": "Erc721",
+    "guids": [
+        "{3133878D-33AA-465B-A468-200850EAC35E}",
+        "{22573139-3C34-4943-9056-D72D46B634BB}",
+        "{576244BB-7173-438C-8DE4-4910F4D7A466}"
+    ],
+    "primaryOutputs": [{
+            "path": "ERC721ContractLibrary\\ERC721ContractLibrary.csproj"
+        },
+        {
+            "path": "ERC721ContractLibrary.Testing\\ERC721ContractLibrary.Testing.csproj"
+        },
+        {
+            "path": "Nethereum.XUnitEthereumClients\\Nethereum.XUnitEthereumClients.csproj"
+        }
+    ],
+    "exclude": ["**/[Bb]in/**", "**/[Oo]bj/**", ".template.config/**/*", "**/*.lock.json"]
+    }
