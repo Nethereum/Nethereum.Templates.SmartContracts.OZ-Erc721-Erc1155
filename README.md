@@ -1,4 +1,4 @@
-# ERC721 - ERC1155 - Governor ContractLibrary Template
+# ERC721 - ERC1155 - Governor Open Zeppelin ContractLibrary Template
 Template to get started creating ERC721 NFTs - ERC1155  and DAO Governor using OpenZeppelin
 
 For more information:
@@ -12,7 +12,7 @@ Do you want to customise your contracts, check Open Zeppelin contract wizard htt
 + Clone this repo
 + Npm install to download all the open zeppelin libraries
 + Run dotnet new -i .\ in the command line / terminal
-+ Run dotnet new erc721 --ContractName "YourContractName"
++ Run dotnet new nethereum.oz --ContractLibrary "YourContractLibraryName"
 
 # General notes
 + Nethereum code generation for all the services is already in place, if you want to alter your contract, open vscode solidity to compile and auto-generate your project.
