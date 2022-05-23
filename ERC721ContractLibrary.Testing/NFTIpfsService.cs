@@ -4,31 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nethereum.Contracts.Standards.ERC721;
+using Nethereum.Web3;
 using Newtonsoft.Json;
 
 namespace ERC721ContractLibrary.Testing
 {
-
-    public class NftMetadata
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("description")]
-        public string Description { get; set; }
-        [JsonProperty("external_url")]
-        public string ExternalUrl { get; set; }
-        [JsonProperty("image")]
-        public string Image { get; set; }
-    }
-
-    public class Nft1155Metadata:NftMetadata
-    {
-        
-        [JsonProperty("decimals")]
-        public int Decimals { get; set; }
-        
-    }
-
     public class NFTIpfsService
     {
         private readonly string _userName;
@@ -61,10 +42,10 @@ namespace ERC721ContractLibrary.Testing
 
         }
 
-        private SimpleHttpIPFS GetSimpleHttpIpfs()
+        private IpfsHttpService GetSimpleHttpIpfs()
         {
-            if (_userName == null) return new SimpleHttpIPFS(_ipfsUrl);
-            return new SimpleHttpIPFS(_ipfsUrl, _userName, _password);
+            if (_userName == null) return new IpfsHttpService(_ipfsUrl);
+            return new IpfsHttpService(_ipfsUrl, _userName, _password);
         }
     }
 }

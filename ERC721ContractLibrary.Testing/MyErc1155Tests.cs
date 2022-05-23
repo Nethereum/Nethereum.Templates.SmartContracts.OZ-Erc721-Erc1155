@@ -9,6 +9,7 @@ using ERC721ContractLibrary.Contracts.MyERC1155;
 using ERC721ContractLibrary.Contracts.MyERC1155.ContractDefinition;
 using ERC721ContractLibrary.Contracts.MyERC721;
 using ERC721ContractLibrary.Contracts.MyERC721.ContractDefinition;
+using Nethereum.Contracts.Standards.ERC1155;
 using Nethereum.Util;
 using Nethereum.XUnitEthereumClients;
 using Newtonsoft.Json;
@@ -103,7 +104,7 @@ namespace ERC721ContractLibrary.Testing
         }
 
 
-        public class ProductNFTMetadata : Nft1155Metadata
+        public class ProductNFTMetadata : NFT155Metadata
         {
            public int ProductId { get; set; }
         }

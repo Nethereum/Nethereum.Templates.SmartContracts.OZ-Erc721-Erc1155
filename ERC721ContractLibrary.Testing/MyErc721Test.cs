@@ -108,7 +108,7 @@ namespace ERC721ContractLibrary.Testing
         }
 
 
-        public class NFTPropertyRegistryMetadata : NftMetadata
+        public class NFTPropertyRegistryMetadata : Nethereum.Contracts.Standards.ERC721.NftMetadata
         {
             [JsonProperty("titleNumber")]
             public string TitleNumber { get; set; }
