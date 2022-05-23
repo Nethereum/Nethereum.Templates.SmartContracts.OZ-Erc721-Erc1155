@@ -16,9 +16,9 @@
             "defaultValue": "MyContractLibrary"
         }
     },
-    "identity": "nethererum.erc721xunit",
+    "identity": "nethererum.ozxunit",
     "shortName": "nethereum.oz",
-    "sourceName": "Erc721",
+    "sourceName": "nethereum.openzeppelin",
     "guids": [
         "{3133878D-33AA-465B-A468-200850EAC35E}",
         "{22573139-3C34-4943-9056-D72D46B634BB}",
