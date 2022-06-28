@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Numerics;
@@ -13,10 +13,10 @@ namespace Nethereum.XUnitEthereumClients
     public enum EthereumClient
     {
         Geth,
-        OpenEthereum,
         Ganache,
         Infura,
-        External
+        External,
+        Hardhat
     }
 
     public enum InfuraNetwork
@@ -31,9 +31,13 @@ namespace Nethereum.XUnitEthereumClients
     {
         public const string ETHEREUM_CLIENT_COLLECTION_DEFAULT = "Ethereum client Test";
         public static string GethClientPath { get; set; } = @"..\..\..\..\testchain\gethclique\geth.exe";
-        public static string ParityClientPath { get; set; } = @"..\..\..\..\testchain\openethereumpoa\openethereum.exe";
+        public static string HardhatClientPath { get; set; } = @"..\..\..\..\testchain\hardhat";
         public static string AccountPrivateKey { get; set; } = "0xb5b1870957d373ef0eeffecc6e4812c0fd08f554b37b233526acc331bf1544f7";
         public static string AccountAddress { get; set; } = "0x12890d2cce102216644c59daE5baed380d84830c";
+
+        public static string HardhatParams { get; set; } =
+            "--fork https://eth-mainnet.alchemyapi.io/v2/{apikey} --fork-block-number 11998887";
+
         public static string ManagedAccountPassword { get; set; } = "password";
         public static string InfuraId { get; set; } = "7238211010344719ad14a89db874158c";
         public static InfuraNetwork InfuraNetwork { get; set; } = InfuraNetwork.Ropsten;
@@ -100,6 +104,10 @@ namespace Nethereum.XUnitEthereumClients
             public string GethPath { get; set; }
             public string ParityPath { get; set; }
 
+            public string HardhatPath { get; set; }
+
+            public string HardhatParams { get; set; }
+
             public string AccountAddress { get; set; }
 
             public string AccountPrivateKey { get; set; }
@@ -129,7 +137,8 @@ namespace Nethereum.XUnitEthereumClients
                     var ethereumTestSettings = new EthereumTestSettings();
                     ethereumTestSection.Bind(ethereumTestSettings);
                     if (!string.IsNullOrEmpty(ethereumTestSettings.GethPath)) GethClientPath = ethereumTestSettings.GethPath;
-                    if (!string.IsNullOrEmpty(ethereumTestSettings.ParityPath)) ParityClientPath = ethereumTestSettings.ParityPath;
+                    if (!string.IsNullOrEmpty(ethereumTestSettings.HardhatPath)) HardhatClientPath = ethereumTestSettings.HardhatPath;
+                    if (!string.IsNullOrEmpty(ethereumTestSettings.HardhatParams)) HardhatParams = ethereumTestSettings.HardhatParams;
                     if (!string.IsNullOrEmpty(ethereumTestSettings.AccountAddress)) AccountAddress = ethereumTestSettings.AccountAddress;
                     if (!string.IsNullOrEmpty(ethereumTestSettings.AccountPrivateKey)) AccountPrivateKey = ethereumTestSettings.AccountPrivateKey;
                     if (!string.IsNullOrEmpty(ethereumTestSettings.ChainId)) ChainId = BigInteger.Parse(ethereumTestSettings.ChainId);
@@ -161,15 +170,15 @@ namespace Nethereum.XUnitEthereumClients
                 EthereumClient = EthereumClient.Geth;
                 Console.WriteLine("********TESTING WITH GETH****************");
             }
-            else if (client == "parity")
-            {
-                EthereumClient = EthereumClient.OpenEthereum;
-                Console.WriteLine("******* TESTING WITH PARITY ****************");
-            }
             else if (client == "ganache")
             {
                 EthereumClient = EthereumClient.Ganache;
                 Console.WriteLine("******* TESTING WITH GANACHE ****************");
+            }
+            else if (client == "hardhat")
+            {
+                EthereumClient = EthereumClient.Hardhat;
+                Console.WriteLine("******* TESTING WITH HARDHAT ****************");
             }
 
             if (EthereumClient == EthereumClient.Geth)
@@ -195,7 +204,7 @@ namespace Nethereum.XUnitEthereumClients
                 Thread.Sleep(3000);
 
                 var psi = new ProcessStartInfo(_exePath,
-                    @" --nodiscover --rpc --datadir=devChain  --rpccorsdomain "" * "" --mine --rpcapi ""eth, web3, personal, net, miner, admin, debug"" --rpcaddr ""0.0.0.0"" --allow-insecure-unlock --unlock 0x12890d2cce102216644c59daE5baed380d84830c --password ""pass.txt""  --ws  --wsaddr ""0.0.0.0"" --wsapi ""eth, web3, personal, net, miner, admin, debug"" --wsorigins "" * "" --verbosity 0 console  ")
+                    @"--nodiscover --http --datadir=devChain  --http.corsdomain ""*"" --mine  --ws --http.api ""eth,web3,personal,net,miner,admin,debug"" --http.addr ""0.0.0.0"" --allow-insecure-unlock --unlock 0x12890d2cce102216644c59daE5baed380d84830c --password ""pass.txt"" --verbosity 0 console")
                 {
                     CreateNoWindow = false,
                     WindowStyle = ProcessWindowStyle.Normal,
@@ -204,37 +213,34 @@ namespace Nethereum.XUnitEthereumClients
 
                 };
                 _process = Process.Start(psi);
-            }
-            else if (EthereumClient == EthereumClient.OpenEthereum)
-            {
-
-                var location = typeof(EthereumClientIntegrationFixture).GetTypeInfo().Assembly.Location;
-                var dirPath = Path.GetDirectoryName(location);
-                _exePath = Path.GetFullPath(Path.Combine(dirPath, ParityClientPath));
-
-                DeleteData();
-
-                var psi = new ProcessStartInfo(_exePath,
-                    @" --config node0.toml") // --logging debug")
-                {
-                    CreateNoWindow = false,
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    UseShellExecute = true,
-                    WorkingDirectory = Path.GetDirectoryName(_exePath)
-
-                };
-                _process = Process.Start(psi);
-                Thread.Sleep(10000);
             }
             else if (EthereumClient == EthereumClient.Ganache)
             {
-                var psi = new ProcessStartInfo("ganache-cli")
+                var psi = new ProcessStartInfo("ganache")
                 {
                     CreateNoWindow = false,
                     WindowStyle = ProcessWindowStyle.Normal,
                     UseShellExecute = true,
                     WorkingDirectory = _exePath,
                     Arguments = " --account=" + AccountPrivateKey + ",10000000000000000000000"
+
+                };
+                _process = Process.Start(psi);
+                Thread.Sleep(10000);
+            }
+            else if (EthereumClient == EthereumClient.Hardhat)
+            {
+                var location = typeof(EthereumClientIntegrationFixture).GetTypeInfo().Assembly.Location;
+                var dirPath = Path.GetDirectoryName(location);
+                _exePath = Path.GetFullPath(Path.Combine(dirPath, HardhatClientPath));
+
+                var psi = new ProcessStartInfo("npx")
+                {
+                    CreateNoWindow = false,
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    UseShellExecute = true,
+                    WorkingDirectory = _exePath,
+                    Arguments = "hardhat node " + HardhatParams
 
                 };
                 _process = Process.Start(psi);
@@ -288,16 +294,6 @@ namespace Nethereum.XUnitEthereumClients
                 }
 
             }
-            else if (EthereumClient == EthereumClient.OpenEthereum)
-            {
-                var pathData = Path.Combine(Path.GetDirectoryName(_exePath), @"parity0\chains");
-
-                if (Directory.Exists(pathData))
-                {
-                    Directory.Delete(pathData, true);
-                }
-            }
-
         }
     }
 }

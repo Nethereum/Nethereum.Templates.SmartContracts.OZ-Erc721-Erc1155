@@ -104,7 +104,7 @@ namespace ERC721ContractLibrary.Testing
         }
 
 
-        public class ProductNFTMetadata : NFT155Metadata
+        public class ProductNFTMetadata : NFT1155Metadata
         {
            public int ProductId { get; set; }
         }
