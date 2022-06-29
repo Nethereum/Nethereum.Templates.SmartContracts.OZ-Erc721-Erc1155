@@ -1,7 +1,7 @@
 {
     "author": "Juan Blanco",
     "classifications": ["Nethereum", "Smart contracts", "OpenZeppelin", "ERC721", "ERC1155"],
-    "name": "Nethereum ERC721, ERC1155 Open Zeppelin and  XUnit samples",
+    "name": "Nethereum ERC721, ERC1155 Open Zeppelin and  XUnit Projects",
     "tags": {
         "language": "C#"
     },
@@ -17,7 +17,7 @@
         }
     },
     "identity": "nethererum.oz",
-    "shortName": "nethereum.erc721-oz",
+    "shortName": "nethereum-erc721-oz",
     "sourceName": "nethereum.openzeppelin",
     "guids": [
         "{D4556174-C01C-410E-B09F-0978886DA38C}",
