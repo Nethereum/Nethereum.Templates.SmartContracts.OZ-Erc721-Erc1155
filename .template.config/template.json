@@ -1,7 +1,7 @@
 {
     "author": "Juan Blanco",
     "classifications": ["Nethereum", "Smart contracts", "OpenZeppelin", "ERC721", "ERC1155"],
-    "name": "Nethereum contract library using Open Zeppelin smart contracts ERC721, ERC1155 and  XUnit samples",
+    "name": "Nethereum ERC721, ERC1155 Open Zeppelin and  XUnit samples",
     "tags": {
         "language": "C#"
     },
@@ -16,13 +16,13 @@
             "defaultValue": "MyContractLibrary"
         }
     },
-    "identity": "nethererum.ozxunit",
-    "shortName": "nethereum.oz",
+    "identity": "nethererum.oz",
+    "shortName": "nethereum.erc721-oz",
     "sourceName": "nethereum.openzeppelin",
     "guids": [
-        "{3133878D-33AA-465B-A468-200850EAC35E}",
-        "{22573139-3C34-4943-9056-D72D46B634BB}",
-        "{576244BB-7173-438C-8DE4-4910F4D7A466}"
+        "{D4556174-C01C-410E-B09F-0978886DA38C}",
+        "{84632F51-7D6B-4CAD-91B1-75419CE42E9B}",
+        "{E6EAF5D7-AA87-4772-BF25-D9D444340BFD}"
     ],
     "primaryOutputs": [{
             "path": "ERC721ContractLibrary\\ERC721ContractLibrary.csproj"
