@@ -6,10 +6,10 @@
         "language": "C#"
     },
     "symbols": {
-        "ContractLibrary": {
+        "ContractLibraryName": {
             "type": "parameter",
             "datatype": "text",
-            "description": "Renames files containing 'ERC721ContractLibrary'",
+            "description": "The contract library name instead of 'MyContractLibrary'",
             "fileRename": "ERC721ContractLibrary",
             "replaces": "ERC721ContractLibrary",
             "isRequired": true,
@@ -18,7 +18,6 @@
     },
     "identity": "nethererum.oz",
     "shortName": "nethereum-erc721-oz",
-    "sourceName": "nethereum.openzeppelin",
     "guids": [
         "{D4556174-C01C-410E-B09F-0978886DA38C}",
         "{84632F51-7D6B-4CAD-91B1-75419CE42E9B}",
